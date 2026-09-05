@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>أحمد البلاسي | متجر إلكتروني</title>
+  <meta name="description" content="متجر أحمد البلاسي - منتجات مميزة وعروض رائعة">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="#">أحمد البلاسي</a>
+    <div class="search"><span>⌕</span><input id="search" placeholder="ابحث عن منتج..."></div>
+    <button class="cart-btn" id="openCart">🛒 السلة <b id="cartCount">0</b></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <span class="eyebrow">متجر أحمد البلاسي</span>
+      <h1>اختار اللي يعجبك<br><span>وخليه عندك</span></h1>
+      <p>اكتشف منتجاتنا واختار طلبك بسهولة وسرعة.</p>
+      <a href="#products" class="primary">تصفح المنتجات</a>
+    </div>
+    <div class="hero-card">🛍️<strong>عروض مميزة</strong><small>منتجات جديدة باستمرار</small></div>
+  </div>
+</section>
+
+<main class="container">
+  <div class="section-head">
+    <div><h2>منتجاتنا</h2><p id="resultText">منتجات مميزة لك</p></div>
+    <select id="category"><option value="all">كل الأقسام</option><option>إلكترونيات</option><option>ملابس</option><option>إكسسوارات</option></select>
+  </div>
+  <div class="products" id="products"></div>
+</main>
+
+<div class="overlay" id="overlay"></div>
+<aside class="cart" id="cart">
+  <div class="cart-head"><h2>سلة المشتريات</h2><button id="closeCart">×</button></div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="cart-foot">
+    <div><span>الإجمالي</span><strong id="total">0 ج.م</strong></div>
+    <button class="primary full" id="checkout">إتمام الطلب</button>
+  </div>
+</aside>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" id="closeModal">×</button>
+    <h2>إتمام الطلب</h2>
+    <p>اكتب بياناتك وسنتواصل معك لتأكيد الطلب.</p>
+    <form id="orderForm">
+      <input required name="name" placeholder="الاسم">
+      <input required name="phone" placeholder="رقم الهاتف">
+      <textarea required name="address" placeholder="العنوان"></textarea>
+      <button class="primary full">إرسال الطلب</button>
+    </form>
+  </div>
+</div>
+
+<footer><div class="container"><strong>أحمد البلاسي</strong><span>© 2026 جميع الحقوق محفوظة</span></div></footer>
+<script src="script.js"></script>
+</body>
+</html>
