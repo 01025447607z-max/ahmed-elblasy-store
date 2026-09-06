@@ -9,7 +9,7 @@ function money(n) {
 
 async function loadProducts() {
   try {
-    const res = await fetch("/api/products");
+    const res = await fetch("/products.json");
     products = await res.json();
     render();
   } catch (err) {
