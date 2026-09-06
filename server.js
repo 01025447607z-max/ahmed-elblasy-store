@@ -29,7 +29,8 @@ if (!fs.existsSync(dataFile)) {
 const upload = multer({
   dest: uploadsDir,
   limits: {
-    fileSize: 5 * 1024 * 1024
+    fileSize: 5 * 1024 * 1024,
+    files: 5
   }
 });
 
@@ -121,44 +122,62 @@ app.get("/api/products", (req, res) => {
   res.json(getProducts());
 });
 
-app.post("/api/products", adminOnly, upload.single("image"), (req, res) => {
-  const { name, category, price, old, badge, description } = req.body;
+app.post(
+  "/api/products",
+  adminOnly,
+  upload.array("images", 5),
+  (req, res) => {
 
-  if (!name || !category || !price) {
-    return res.status(400).json({
-      error: "الاسم والقسم والسعر مطلوبة"
+    const {
+      name,
+      category,
+      price,
+      old,
+      badge,
+      description
+    } = req.body;
+
+    if (!name || !category || !price) {
+      return res.status(400).json({
+        error: "الاسم والقسم والسعر مطلوبة"
+      });
+    }
+
+    const priceNumber = Number(price);
+
+    if (!Number.isFinite(priceNumber) || priceNumber <= 0) {
+      return res.status(400).json({
+        error: "السعر غير صحيح"
+      });
+    }
+
+    const products = getProducts();
+
+    const images = (req.files || []).map(file =>
+      `/uploads/${file.filename}`
+    );
+
+    const product = {
+      id: Date.now(),
+      name,
+      category,
+      price: priceNumber,
+      old: old ? Number(old) : null,
+      badge: badge || "",
+      description: description || "",
+      images,
+      img: images[0] || ""
+    };
+
+    products.push(product);
+    saveProducts(products);
+
+    res.json({
+      success: true,
+      product
     });
   }
-
-  const priceNumber = Number(price);
-
-  if (!Number.isFinite(priceNumber) || priceNumber <= 0) {
-    return res.status(400).json({
-      error: "السعر غير صحيح"
-    });
-  }
-
-  const products = getProducts();
-
-  const product = {
-    id: Date.now(),
-    name,
-    category,
-    price: priceNumber,
-    old: old ? Number(old) : null,
-    badge: badge || "",
-    description: description || "",
-    img: req.file ? `/uploads/${req.file.filename}` : ""
-  };
-
-  products.push(product);
-  saveProducts(products);
-
-  res.json({
-    success: true,
-    product
-  });
-});
+);
 
 app.delete("/api/products/:id", adminOnly, (req, res) => {
   const id = Number(req.params.id);
@@ -172,14 +191,20 @@ app.delete("/api/products/:id", adminOnly, (req, res) => {
     });
   }
 
-  if (product.img && product.img.startsWith("/uploads/")) {
-    const filename = path.basename(product.img);
-    const file = path.join(uploadsDir, filename);
+  const images = Array.isArray(product.images)
+    ? product.images
+    : (product.img ? [product.img] : []);
 
-    if (fs.existsSync(file)) {
-      fs.unlinkSync(file);
+  images.forEach(img => {
+    if (img && img.startsWith("/uploads/")) {
+      const filename = path.basename(img);
+      const file = path.join(uploadsDir, filename);
+
+      if (fs.existsSync(file)) {
+        fs.unlinkSync(file);
+      }
     }
-  }
+  });
 
   saveProducts(products.filter(p => p.id !== id));
 

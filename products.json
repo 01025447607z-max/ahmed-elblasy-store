@@ -1,22 +1,17 @@
 [
   {
-    "id": 1788641599898,
+    "id": 1788701147365,
     "name": "ايفون 17 برو ماكس",
     "category": "إلكترونيات",
     "price": 85000,
     "old": 87500,
-    "badge": "خصم 2%",
-    "description": "",
-    "img": "/uploads/ac8fc17c126285cdd4da722a7465b6e9"
-  },
-  {
-    "id": 1788659079709,
-    "name": "ايفون 17 برو ماكس",
-    "category": "إلكترونيات",
-    "price": 85000,
-    "old": 87500,
-    "badge": "خصم 3%",
-    "description": "",
-    "img": "/uploads/dbc88876907f01a47f1573a33de47d87"
+    "badge": "جديد",
+    "description": "كسر زيرو المساحه 1تيرا",
+    "images": [
+      "/uploads/93d506d24ebedf4b6b253dc1bcedbbe3",
+      "/uploads/14ad0bf7bcc5e87bf64233f69fcf568c",
+      "/uploads/0713526e188519f5c2af74e1f1112e9e"
+    ],
+    "img": "/uploads/93d506d24ebedf4b6b253dc1bcedbbe3"
   }
 ]
